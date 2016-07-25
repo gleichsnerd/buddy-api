@@ -1,6 +1,7 @@
 class SessionsController < ApplicationController
 
   respond_to :json
+  before_action :authenticate, except: :create
 
   def create
     p_hash = params[:session]
@@ -30,10 +31,15 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    user = User.find_by(auth_token: params[:id])
+    p_hash = params[:session]
+    session = eval(p_hash)
+    user = User.find_by(id: session[:id])
     user.generate_authentication_token!
-    user.save
-    head 204
+    if user.save!
+      render json: { success:true, message:"Logged out"}, status: 200
+    else
+      render json: { success:false, message:"Unable to log out"}, status: 500
+    end
   end
 
 end
