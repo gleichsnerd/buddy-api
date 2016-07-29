@@ -12,43 +12,6 @@
 
 ActiveRecord::Schema.define(version: 20160725225120) do
 
-  create_table "letters", force: :cascade do |t|
-    t.integer  "sent_from_id"
-    t.integer  "sent_to_id"
-    t.string   "subject"
-    t.string   "content"
-    t.integer  "mailbox_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.index ["mailbox_id"], name: "index_letters_on_mailbox_id"
-    t.index ["sent_from_id"], name: "index_letters_on_sent_from_id"
-    t.index ["sent_to_id"], name: "index_letters_on_sent_to_id"
-  end
-
-  create_table "mailboxes", force: :cascade do |t|
-    t.string   "user"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "sent_froms", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "letter_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["letter_id"], name: "index_sent_froms_on_letter_id"
-    t.index ["user_id"], name: "index_sent_froms_on_user_id"
-  end
-
-  create_table "sent_tos", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "letter_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["letter_id"], name: "index_sent_tos_on_letter_id"
-    t.index ["user_id"], name: "index_sent_tos_on_user_id"
-  end
-
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"

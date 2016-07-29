@@ -24,6 +24,8 @@ GEM
       erubis (~> 2.7.0)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
+    active-model-adapter-source (2.1.1)
+      ember-data-source (>= 1.13, < 3.0)
     active_model_serializers (0.10.2)
       actionpack (>= 4.1, < 6)
       activemodel (>= 4.1, < 6)
@@ -54,6 +56,9 @@ GEM
       railties (>= 4.1.0, < 5.1)
       responders
       warden (~> 1.2.3)
+    ember-data-source (2.7.0)
+      ember-source (>= 2, < 3.0)
+    ember-source (2.7.0)
     erubis (2.7.0)
     ffi (1.9.13)
     globalid (0.3.6)
@@ -141,6 +146,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active-model-adapter-source (~> 2.1.1)
   active_model_serializers
   byebug
   devise

@@ -4,7 +4,7 @@ class ApplicationController < ActionController::API
 
   def authenticate
     session = nil
-    
+
     no_session = {code: 400, success: false, reason: "No session passed"}
     bad_auth = {code: 403, success: false, reason: "Invalid auth params"}
 
@@ -16,7 +16,7 @@ class ApplicationController < ActionController::API
 
     #TODO: Sanitize session
     if session.nil?
-      render status: 400, json: no_session.as_json
+      return render status: 400, json: no_session.as_json
     elsif session.is_a? String
       session = eval(session)
     end
@@ -33,7 +33,7 @@ class ApplicationController < ActionController::API
       end
     end
 
-    render status: 403, json: bad_auth.as_json
+    return render status: 403, json: bad_auth.as_json
   end
 
 end

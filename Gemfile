@@ -19,6 +19,8 @@ gem 'rack-cors'
 
 gem 'devise'
 
+gem 'active-model-adapter-source', '~>2.1.1'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
