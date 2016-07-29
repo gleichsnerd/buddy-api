@@ -36,6 +36,14 @@ class Api::V1::UsersController < ApplicationController
     signup[:password] = params[:password]
     signup[:password_confirmation] = params[:password_confirmation]
 
+    if params[:first_name]
+      signup[:first_name] = params[:first_name]
+    end
+
+    if params[:last_name]
+      signup[:last_name] = params[:last_name]
+    end
+
     signup
   end
 
