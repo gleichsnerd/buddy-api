@@ -10,11 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160725225120) do
+ActiveRecord::Schema.define(version: 20160730201654) do
+
+  create_table "locations", force: :cascade do |t|
+    t.float    "latitude"
+    t.float    "longitude"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "mailbox_collections", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_mailbox_collections_on_user_id"
+  end
+
+  create_table "mailboxes", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "mailbox_collection_id"
+    t.integer  "user_id"
+    t.integer  "location_id"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.index ["location_id"], name: "index_mailboxes_on_location_id"
+    t.index ["mailbox_collection_id"], name: "index_mailboxes_on_mailbox_collection_id"
+    t.index ["user_id"], name: "index_mailboxes_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
+    t.integer  "mailbox_collection_id"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "email",                  default: "", null: false
@@ -30,6 +57,7 @@ ActiveRecord::Schema.define(version: 20160725225120) do
     t.string   "auth_token",             default: ""
     t.index ["auth_token"], name: "index_users_on_auth_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["mailbox_collection_id"], name: "index_users_on_mailbox_collection_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
