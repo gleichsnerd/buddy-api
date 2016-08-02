@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160730201654) do
+ActiveRecord::Schema.define(version: 20160801223058) do
+
+  create_table "letters", force: :cascade do |t|
+    t.string   "subject"
+    t.string   "content"
+    t.integer  "sent_from_user_id"
+    t.integer  "sent_to_user_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.index ["sent_from_user_id"], name: "index_letters_on_sent_from_user_id"
+    t.index ["sent_to_user_id"], name: "index_letters_on_sent_to_user_id"
+  end
 
   create_table "locations", force: :cascade do |t|
     t.float    "latitude"
@@ -29,19 +40,34 @@ ActiveRecord::Schema.define(version: 20160730201654) do
   create_table "mailboxes", force: :cascade do |t|
     t.string   "name"
     t.integer  "mailbox_collection_id"
-    t.integer  "user_id"
     t.integer  "location_id"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
     t.index ["location_id"], name: "index_mailboxes_on_location_id"
     t.index ["mailbox_collection_id"], name: "index_mailboxes_on_mailbox_collection_id"
-    t.index ["user_id"], name: "index_mailboxes_on_user_id"
+  end
+
+  create_table "sent_from_users", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "letter_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["letter_id"], name: "index_sent_from_users_on_letter_id"
+    t.index ["user_id"], name: "index_sent_from_users_on_user_id"
+  end
+
+  create_table "sent_to_users", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "letter_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["letter_id"], name: "index_sent_to_users_on_letter_id"
+    t.index ["user_id"], name: "index_sent_to_users_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
-    t.integer  "mailbox_collection_id"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "email",                  default: "", null: false
@@ -57,7 +83,6 @@ ActiveRecord::Schema.define(version: 20160730201654) do
     t.string   "auth_token",             default: ""
     t.index ["auth_token"], name: "index_users_on_auth_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["mailbox_collection_id"], name: "index_users_on_mailbox_collection_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 

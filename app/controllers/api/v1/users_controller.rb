@@ -21,11 +21,8 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def index
-    render json: User.all
-  end
-
-  def show
-    render json: User.find(params[:id])
+    session = get_session
+    render json: User.find(session[:id])
   end
 
   protected
