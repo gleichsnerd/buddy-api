@@ -4,10 +4,7 @@ class SessionsController < ApplicationController
   before_action :authenticate, except: :create
 
   def create
-    p_hash = params[:session]
-    if p_hash.is_a? String
-      p_hash = eval(p_hash)
-    end
+    p_hash = get_session
 
     user_password = p_hash[:password]
     user_email = p_hash[:email]
@@ -41,5 +38,5 @@ class SessionsController < ApplicationController
       render json: { success:false, message:"Unable to log out"}, status: 500
     end
   end
-
+  
 end
