@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       resources :users, except: [:new, :create, :edit, :show]
       resources :mailbox_collection, except: [:new, :create, :show, :destroy]
       resources :mailbox
+      resources :letter
     end
   end
 

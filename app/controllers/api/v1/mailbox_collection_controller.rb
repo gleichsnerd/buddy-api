@@ -1,5 +1,5 @@
 class Api::V1::MailboxCollectionController < ApplicationController
-  before_action :authenticate, except: :create
+  before_action :authenticate
   respond_to :json
 
   def index

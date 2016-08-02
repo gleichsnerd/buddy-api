@@ -1,6 +1,6 @@
 class Api::V1::MailboxController < ApplicationController
 
-  before_action :authenticate, except: :create
+  before_action :authenticate
   respond_to :json
   
   def create
