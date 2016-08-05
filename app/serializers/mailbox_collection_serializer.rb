@@ -1,3 +1,4 @@
 class MailboxCollectionSerializer < ActiveModel::Serializer
-  attributes :id, :mailboxes
+  attributes :id
+  has_many :mailboxes
 end

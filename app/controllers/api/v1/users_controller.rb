@@ -20,7 +20,7 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-  def index
+  def show
     session = get_session
     render json: User.find(session[:id])
   end
