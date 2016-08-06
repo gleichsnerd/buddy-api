@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :users, except: [:new, :create, :edit]
-      resources :mailbox_collection, except: [:new, :create, :destroy]
       resources :mailbox
       resources :letter
     end

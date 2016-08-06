@@ -17,7 +17,12 @@ class Api::V1::MailboxController < ApplicationController
 
   def show
     session = get_session
-    render json: Mailbox.find_by(id: params[:id])
+    render json: Mailbox.find(params[:id])
+  end
+
+  def index
+    session = get_session
+    render json: User.find(session[:id]).mailboxes
   end
 
 end
