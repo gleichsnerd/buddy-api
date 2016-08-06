@@ -5,9 +5,15 @@ class ApplicationController < ActionController::API
   def authenticate
     session = get_session
 
+    no_session = {
+      success: false,
+      message: "Error: no session was passed in"
+    }
+
     #TODO: Sanitize session
     if session.nil?
-      return render status: 400, json: no_session.as_json
+      puts "***Error: no session passed in"
+      return render status: 400, json: no_session
     end
 
     id = session[:id]

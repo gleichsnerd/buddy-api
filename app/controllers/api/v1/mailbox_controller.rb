@@ -6,7 +6,7 @@ class Api::V1::MailboxController < ApplicationController
   def create
     session = get_session
     mc = MailboxCollection.find_by(user_id: session[:id])
-    m = Mailbox.new(mailbox_collection: mc)
+    m = Mailbox.new(mailbox_collection: mc, name: params[:name])
     
     if m.save!
       render json: m
