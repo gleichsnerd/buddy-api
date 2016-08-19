@@ -10,7 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160801223058) do
+ActiveRecord::Schema.define(version: 20160813213426) do
+
+  create_table "address_book_friend_records", force: :cascade do |t|
+    t.integer  "address_book_friend_id"
+    t.integer  "mailbox_id"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.index ["address_book_friend_id"], name: "index_address_book_friend_records_on_address_book_friend_id"
+    t.index ["mailbox_id"], name: "index_address_book_friend_records_on_mailbox_id"
+  end
+
+  create_table "address_book_friends", force: :cascade do |t|
+    t.integer  "address_book_id"
+    t.integer  "friend_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["address_book_id"], name: "index_address_book_friends_on_address_book_id"
+    t.index ["friend_id"], name: "index_address_book_friends_on_friend_id"
+  end
+
+  create_table "address_books", force: :cascade do |t|
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_address_books_on_user_id"
+  end
 
   create_table "letters", force: :cascade do |t|
     t.string   "subject"
@@ -19,6 +44,8 @@ ActiveRecord::Schema.define(version: 20160801223058) do
     t.integer  "sent_to_user_id"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.integer  "mailbox_id"
+    t.index ["mailbox_id"], name: "index_letters_on_mailbox_id"
     t.index ["sent_from_user_id"], name: "index_letters_on_sent_from_user_id"
     t.index ["sent_to_user_id"], name: "index_letters_on_sent_to_user_id"
   end
@@ -45,6 +72,15 @@ ActiveRecord::Schema.define(version: 20160801223058) do
     t.datetime "updated_at",            null: false
     t.index ["location_id"], name: "index_mailboxes_on_location_id"
     t.index ["mailbox_collection_id"], name: "index_mailboxes_on_mailbox_collection_id"
+  end
+
+  create_table "penpals", force: :cascade do |t|
+    t.integer  "user_1_id"
+    t.integer  "user_2_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_1_id"], name: "index_penpals_on_user_1_id"
+    t.index ["user_2_id"], name: "index_penpals_on_user_2_id"
   end
 
   create_table "sent_from_users", force: :cascade do |t|

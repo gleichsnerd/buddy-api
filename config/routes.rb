@@ -8,6 +8,8 @@ Rails.application.routes.draw do
       resources :users, except: [:new, :create, :edit]
       resources :mailbox
       resources :letter
+
+      resources :address_book, except: [:new, :create, :destroy]
     end
   end
 

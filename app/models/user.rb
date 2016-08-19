@@ -6,13 +6,18 @@ class User < ApplicationRecord
 
   validates :auth_token, uniqueness: true
   before_create :generate_authentication_token!
-  after_create  :create_mailbox_collection
+  after_create  :create_mailbox_collection, :create_address_book
 
   has_one :mailbox_collection
   has_many :mailboxes, through: :mailbox_collection
 
   has_many :sent_from_user
   has_many :sent_to_user
+
+  has_many :penpals, foreign_key: "user_1_id"
+  has_many :buddies, through: :penpals, source: :user_2, class_name: "User"
+
+  has_one :address_book
 
   def generate_authentication_token!
     begin
@@ -22,11 +27,20 @@ class User < ApplicationRecord
 
   def create_mailbox_collection
     if self.mailbox_collection.nil?
-      mc = MailboxCollection.create()
-      mc.user_id = self.id
+      mc = MailboxCollection.create(user: self)
       mc.save
 
       self.mailbox_collection = mc
+      self.save
+    end
+  end
+
+  def create_address_book
+    if self.address_book.nil?
+      ab = AddressBook.create(user: self)
+      ab.save
+
+      self.address_book = ab
       self.save
     end
   end
