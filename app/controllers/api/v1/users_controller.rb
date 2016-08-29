@@ -21,8 +21,11 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def show
-    session = get_session
-    render json: User.find(session[:id])
+    if @@session[:id] != params[:id].to_i
+      render json: User.find(params[:id].to_i), serializer: FriendSerializer
+    else
+      render json: User.find(@@session[:id]), each_serializer: UserSerializer
+    end
   end
 
   protected

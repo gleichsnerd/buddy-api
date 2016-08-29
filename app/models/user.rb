@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   validates :auth_token, uniqueness: true
   before_create :generate_authentication_token!
-  after_create  :create_mailbox_collection, :create_address_book
+  after_create  :create_mailbox_collection, :create_address_book, :create_friend_equiv
 
   has_one :mailbox_collection
   has_many :mailboxes, through: :mailbox_collection
@@ -18,6 +18,7 @@ class User < ApplicationRecord
   has_many :buddies, through: :penpals, source: :user_2, class_name: "User"
 
   has_one :address_book
+  has_many :address_book_friends, through: :address_book
 
   def generate_authentication_token!
     begin
@@ -43,5 +44,9 @@ class User < ApplicationRecord
       self.address_book = ab
       self.save
     end
+  end
+
+  def create_friend_equiv
+    Friend.create(first_name: self.first_name, last_name: self.last_name)
   end
 end

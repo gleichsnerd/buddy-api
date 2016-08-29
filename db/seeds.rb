@@ -10,8 +10,8 @@
 u1 = User.create(first_name: "Testy", last_name: "McTesterman", email: "test@test.com", password: "password", password_confirmation: "password")
 u2 = User.create(first_name: "Bob", last_name: "Ross", email: "bob@ross.com", password: "password", password_confirmation: "password")
 
-Mailbox.create(mailbox_collection: u1.mailbox_collection)
-m = Mailbox.create(mailbox_collection: u2.mailbox_collection)
+Mailbox.create(mailbox_collection: u1.mailbox_collection, name: "Testy's mailbox")
+m = Mailbox.create(mailbox_collection: u2.mailbox_collection, name: "Bob's mailbox")
 
 u1.save
 u2.save
